@@ -20,14 +20,14 @@ public class Swagger2Config
     @Bean
     public Docket api()
     {
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                                                      //                .apis(RequestHandlerSelectors.any())
-                                                      .apis(RequestHandlerSelectors.basePackage("com.lambdaschool.oauthmin"))
-                                                      .paths(PathSelectors.any())
-                                                      .build()
-                                                      .useDefaultResponseMessages(false) // Allows only my exception responses
-                                                      .ignoredParameterTypes(Pageable.class) // allows only my paging parameter list
-                                                      .apiInfo(apiEndPointsInfo());
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors
+                        .basePackage("com.lambdaschool.school"))
+                .paths(PathSelectors.any()).build()
+                .useDefaultResponseMessages(false) // Allows only my exception responses
+                .ignoredParameterTypes(Pageable.class) // allows only my paging parameter list
+                .apiInfo(apiEndPointsInfo());
     }
 
     private ApiInfo apiEndPointsInfo()

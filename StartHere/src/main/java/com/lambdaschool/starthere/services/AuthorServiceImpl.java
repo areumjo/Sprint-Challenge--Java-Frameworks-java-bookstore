@@ -5,11 +5,11 @@ import com.lambdaschool.starthere.models.Author;
 import com.lambdaschool.starthere.repository.AuthorRepository;
 import com.lambdaschool.starthere.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +20,9 @@ public class AuthorServiceImpl implements AuthorService
     AuthorRepository authorepos;
 
     @Override
-    public List<Author> findAll() {
+    public List<Author> findAll(Pageable pageable) {
         List<Author> authorList = new ArrayList<>();
-        authorepos.findAll().iterator().forEachRemaining(authorList::add);
+        authorepos.findAll(pageable).iterator().forEachRemaining(authorList::add);
         return authorList;
     }
 

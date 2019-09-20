@@ -1,14 +1,15 @@
 package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.models.Author;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public interface AuthorService
 {
-    List<Author> findAll();
+    List<Author> findAll(Pageable pageable);
 
     void delete(long id);
 

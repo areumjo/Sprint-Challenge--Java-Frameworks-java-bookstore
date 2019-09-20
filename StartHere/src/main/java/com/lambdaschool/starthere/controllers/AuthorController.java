@@ -7,6 +7,7 @@ import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class AuthorController
     AuthorService authorService;
 
     // custom swagger
-    @ApiOperation(value = "Return a course associated with the course id", response = Author.class, responseContainer = "List")
+    @ApiOperation(value = "Return 3 authors on each page", response = Author.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve (0..N)"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page"),
@@ -41,19 +42,34 @@ public class AuthorController
     public ResponseEntity<?> listAllAuthors(
             @PageableDefault(page = 0,
                     size = 3)
-            HttpServletRequest request)
+                    Pageable pageable)
     {
-        List<Author> allAuthors = authorService.findAll();
+        List<Author> allAuthors = authorService.findAll(pageable);
         return new ResponseEntity<>(allAuthors, HttpStatus.OK);
     }
 
+    // all - authors
+    @GetMapping(value = "/allAuthors", produces = {"application/json"})
+    public ResponseEntity<?> reallListAllAuthors()
+    {
+        List<Author> allAuthors = authorService.findAll(Pageable.unpaged());
+        return new ResponseEntity<>(allAuthors, HttpStatus.OK);
+    }
+
+    // custom swagger
+    @ApiOperation(value = "Return an author associated with the author id", response = Author.class, responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Author by author-id Found", response = Author.class),
+            @ApiResponse(code = 404, message = "Author by author-id Not Found", response = ErrorDetail.class)
+    })
     @GetMapping(value = "/authors/{authorid}",
                 produces = {"application/json"})
-    public ResponseEntity<?> listBooksByAuthorId(HttpServletRequest request, @PathVariable Long authorid)
+    public ResponseEntity<?> listAuthorByAuthorId(
+            @ApiParam(value = "Author id", required = true, example = "1")
+            @PathVariable long authorid)
     {
-        logger.trace(request.getMethod()
-                .toUpperCase() + " " + request.getRequestURI() + " accessed");
-
+//        logger.trace(request.getMethod()
+//                .toUpperCase() + " " + request.getRequestURI() + " accessed");
         Author newAut = authorService.findAuthorById(authorid);
         return new ResponseEntity<>(newAut, HttpStatus.OK);
     }
@@ -66,7 +82,13 @@ public class AuthorController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // custom swagger
     // localhost:2019/authors/author -- POST
+    @ApiOperation(value = "Creates a new Author.", notes = "The newly created author id will be sent in the location header", response = void.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Author Successfully Created", response = void.class),
+            @ApiResponse(code = 500, message = "Error creating author", response = ErrorDetail.class)
+    })
     @PostMapping(value = "/author",
             consumes = {"application/json"},
             produces = {"application/json"})
