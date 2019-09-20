@@ -4,10 +4,11 @@ import com.lambdaschool.starthere.models.Book;
 
 import java.awt.print.Pageable;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface BookService
 {
-    ArrayList<Book> findAll();
+    List<Book> findAll(Pageable pageable);
 
     void delete(long id);
 

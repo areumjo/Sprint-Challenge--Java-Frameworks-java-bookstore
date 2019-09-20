@@ -17,13 +17,11 @@ public class Book extends Auditable
     @Column(nullable = false)
     private String booktitle;
 
-    @Column(nullable = false)
     private String ISBN;
 
-    @Column
     private String copy;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "wrote",
             joinColumns = {@JoinColumn(name = "bookid")},
             inverseJoinColumns = {@JoinColumn(name = "authorid")})

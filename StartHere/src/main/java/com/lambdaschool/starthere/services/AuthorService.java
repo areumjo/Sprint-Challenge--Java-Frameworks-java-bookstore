@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface AuthorService
 {
-    ArrayList<Author> findAll();
+    List<Author> findAll();
 
     void delete(long id);
 
-    Author findBookById(long id);
+    Author findAuthorById(long id);
 
     Author save(Author author);
 

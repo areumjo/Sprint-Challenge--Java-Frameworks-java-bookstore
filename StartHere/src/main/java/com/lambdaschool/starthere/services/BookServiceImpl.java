@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+
 import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,11 @@ public class BookServiceImpl implements BookService
     @Autowired
     private BookRepository bookrepos;
 
-
     @Override
-    public ArrayList<Book> findAll() {
-//        ArrayList<Book> authorList = new ArrayList<>();
-//        bookrepos.findAll().iterator().forEachRemaining(authorList::add);
-//        return authorList;
+    public List<Book> findAll(Pageable pageable) {
+//        List<Book> bookList = new ArrayList<>();
+//        bookrepos.findAll((org.springframework.data.domain.Pageable) pageable).iterator().forEachRemaining(bookList::add);
+//        return bookList;
         return null;
     }
 
@@ -50,11 +50,21 @@ public class BookServiceImpl implements BookService
     @Transactional
     @Override
     public Book save(Book book) {
+//        Book newBook = new Book();
+//        newBook.setBooktitle(Book.getBooktitle());
+//        return bookrepos.save(newBook);
         return null;
     }
 
     @Override
     public Book update(Book book, long id) {
+//        Book currentBook = bookrepos.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
+//        if (book.getBooktitle() != null)
+//        {
+//            currentBook.setBooktitle(book.getBooktitle());
+//        }
+//        return bookrepos.save(currentBook);
         return null;
     }
 }
