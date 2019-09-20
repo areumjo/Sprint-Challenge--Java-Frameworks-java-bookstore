@@ -144,7 +144,7 @@
 
     <build>
 <!--        <finalName>${project.artifactId}</finalName>-->
-        <finalName>jrmmba-oauthmin</finalName>
+        <finalName>areumjo-bookstore</finalName>
 
         <plugins>
             <plugin>
