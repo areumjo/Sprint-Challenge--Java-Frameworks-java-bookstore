@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "books")
+@Table(name = "book")
 public class Book extends Auditable
 {
     @Id
@@ -20,14 +20,14 @@ public class Book extends Auditable
     @Column(nullable = false)
     private String ISBN;
 
-    @Column(nullable = false)
+    @Column
     private String copy;
 
     @ManyToMany
-    @JoinTable(name = "audit",
+    @JoinTable(name = "wrote",
             joinColumns = {@JoinColumn(name = "bookid")},
             inverseJoinColumns = {@JoinColumn(name = "authorid")})
-    @JsonIgnoreProperties("authors")
+    @JsonIgnoreProperties("books")
     private List<Author> authors = new ArrayList<>();
 
     public Book() {
